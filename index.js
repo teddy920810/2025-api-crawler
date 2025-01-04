@@ -6,22 +6,28 @@ const {
   fetchPageInfo,
   updatePage
 } = require('./apiService');
-const { readExcel } = require('./excelService');
+const { readExcel, writeExcel } = require('./excelService');
 const { API_TOKEN, EXCEL_FILE_PATH, API_COOKIE, API_REFERER } = require('./config');
 
+let result_ids = [];
 async function processApiData(data, type) {
-  //console.log(`Processing ${type} data:`, data);
   // 在这里添加特定的数据处理逻辑
   //查询data.content中第一次出现"HitPaw Univd"的位置并将"HitPaw Univd"替换为"HitPaw Univd (HitPaw Video Converter)"
   const index = data.content.search(/(?<!['"])HitPaw Univd(?!['"])/);
   if (index !== -1) {
     data.content = data.content.slice(0, index) + 'HitPaw Univd (HitPaw Video Converter)' + data.content.slice(index + 'HitPaw Univd'.length);
   }
-  //控制台打印data的信息
-  console.log(data.content);
   //更新页面
   const result = await updatePage(data);
   console.log('Update Page Result:', result);
+  //检查是否成功更新页面
+  if (result.code == 1) {
+    console.log(result.msg);
+    //将result.data.id存入全局数组中
+    result_ids.push(result.data.id);
+  } else {
+    console.log('更新失败');
+  }
 }
 
 async function delay(ms) {
@@ -58,11 +64,13 @@ async function processAllPages() {
         // 继续处理下一个 ID，而不是中断整个过程
       }
     }
-
     console.log('All pages processed.');
+    //打印result_ids数组
+    console.log('result_ids:', result_ids);
   } catch (error) {
     console.error('Error in processAllPages:', error.message);
   }
 }
 
 processAllPages();
+

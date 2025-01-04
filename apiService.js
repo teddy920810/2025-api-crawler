@@ -62,7 +62,6 @@ async function testFetchSiteInfo() {
   try {
     const data = {}; // 添加所需的请求体数据
     const result = await fetchSiteInfo(data);
-    console.log('Site Info:', result);
   } catch (error) {
     console.error('Error in testFetchSiteInfo:', error.message);
   }
@@ -72,7 +71,6 @@ async function testFetchArticleTemplate() {
   try {
     const data = {}; // 添加所需的请求体数据
     const result = await fetchArticleTemplate(data);
-    console.log('Article Template:', result);
   } catch (error) {
     console.error('Error in testFetchArticleTemplate:', error.message);
   }
@@ -85,7 +83,6 @@ async function testFetchPageList() {
       pageSize: 10
     }; // 示例请求体数据
     const result = await fetchPageList(data);
-    console.log('Page List:', result);
   } catch (error) {
     console.error('Error in testFetchPageList:', error.message);
   }
@@ -97,7 +94,6 @@ async function testFetchPageInfo() {
       id: 'some-page-id'
     }; // 示例请求体数据
     const result = await fetchPageInfo(data);
-    console.log('Page Info:', result);
   } catch (error) {
     console.error('Error in testFetchPageInfo:', error.message);
   }
@@ -112,7 +108,6 @@ async function testUpdatePage() {
         content: 'Updated page content...'
       }; // 示例请求体数据
       const result = await updatePage(data);
-      console.log('Update Page Result:', result);
     } catch (error) {
       console.error('Error in testUpdatePage:', error.message);
     }
